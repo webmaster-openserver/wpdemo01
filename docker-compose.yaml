@@ -77,7 +77,7 @@ services:
     image: 'phpmyadmin/phpmyadmin:latest'
     container_name: phpmyadmin-v4wog88gw8k8goskgc00s0ck-053932419381
     ports:
-      - '8080:80'
+      - '8081:80'
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
