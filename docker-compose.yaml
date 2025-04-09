@@ -1,46 +1,111 @@
-version: '3.8'
-
 services:
   wordpress:
-    image: wordpress:latest
-    container_name: wordpress
+    image: 'wordpress:latest'
+    container_name: wordpress-v4wog88gw8k8goskgc00s0ck-053932400980
     ports:
-      - "8000:80"
+      - '8000:80'
     environment:
-      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_HOST: 'db:3306'
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
+      COOLIFY_BRANCH: '"main"'
+      COOLIFY_RESOURCE_UUID: v4wog88gw8k8goskgc00s0ck
+      COOLIFY_CONTAINER_NAME: wordpress-v4wog88gw8k8goskgc00s0ck-053932400980
+      COOLIFY_URL: 'http://kosgkk4o04gc44wk84oos4k4.142.44.158.217.sslip.io'
+      COOLIFY_FQDN: kosgkk4o04gc44wk84oos4k4.142.44.158.217.sslip.io
     volumes:
-      - ./wordpress:/var/www/html
+      - '/data/coolify/applications/v4wog88gw8k8goskgc00s0ck/wordpress:/var/www/html'
     depends_on:
       - db
     restart: always
-
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.406
+      - coolify.applicationId=1
+      - coolify.type=application
+      - coolify.name=wordpress-v4wog88gw8k8goskgc00s0ck-053932400980
+      - coolify.resourceName=webmaster-openserverwpdemo01main-p4o0g8gossggcwcc0oosksgw
+      - coolify.projectName=wordpress-demo
+      - coolify.serviceName=webmaster-openserverwpdemo01main-p4o0g8gossggcwcc0oosksgw
+      - coolify.environmentName=development
+      - coolify.pullRequestId=0
+      - traefik.enable=true
+      - traefik.http.middlewares.gzip.compress=true
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.routers.http-0-v4wog88gw8k8goskgc00s0ck-wordpress.entryPoints=http
+      - traefik.http.routers.http-0-v4wog88gw8k8goskgc00s0ck-wordpress.middlewares=gzip
+      - 'traefik.http.routers.http-0-v4wog88gw8k8goskgc00s0ck-wordpress.rule=Host(`kosgkk4o04gc44wk84oos4k4.142.44.158.217.sslip.io`) && PathPrefix(`/`)'
+      - 'caddy_0.encode=zstd gzip'
+      - 'caddy_0.handle_path.0_reverse_proxy={{upstreams}}'
+      - 'caddy_0.handle_path=/*'
+      - caddy_0.header=-Server
+      - 'caddy_0.try_files={path} /index.html /index.php'
+      - 'caddy_0=http://kosgkk4o04gc44wk84oos4k4.142.44.158.217.sslip.io'
+      - caddy_ingress_network=v4wog88gw8k8goskgc00s0ck
+    networks:
+      v4wog88gw8k8goskgc00s0ck: null
   db:
-    image: mysql:8.0
-    container_name: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    image: 'mysql:8.0'
+    container_name: db-v4wog88gw8k8goskgc00s0ck-053932414137
+    command: '--default-authentication-plugin=mysql_native_password'
     volumes:
-      - db_data:/var/lib/mysql
+      - 'v4wog88gw8k8goskgc00s0ck_db-data:/var/lib/mysql'
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
       MYSQL_ROOT_PASSWORD: root
+      COOLIFY_BRANCH: '"main"'
+      COOLIFY_RESOURCE_UUID: v4wog88gw8k8goskgc00s0ck
+      COOLIFY_CONTAINER_NAME: db-v4wog88gw8k8goskgc00s0ck-053932414137
     restart: always
-
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.406
+      - coolify.applicationId=1
+      - coolify.type=application
+      - coolify.name=db-v4wog88gw8k8goskgc00s0ck-053932414137
+      - coolify.resourceName=webmaster-openserverwpdemo01main-p4o0g8gossggcwcc0oosksgw
+      - coolify.projectName=wordpress-demo
+      - coolify.serviceName=webmaster-openserverwpdemo01main-p4o0g8gossggcwcc0oosksgw
+      - coolify.environmentName=development
+      - coolify.pullRequestId=0
+    networks:
+      v4wog88gw8k8goskgc00s0ck: null
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
+    image: 'phpmyadmin/phpmyadmin:latest'
+    container_name: phpmyadmin-v4wog88gw8k8goskgc00s0ck-053932419381
     ports:
-      - "8080:80"
+      - '8080:80'
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
+      COOLIFY_BRANCH: '"main"'
+      COOLIFY_RESOURCE_UUID: v4wog88gw8k8goskgc00s0ck
+      COOLIFY_CONTAINER_NAME: phpmyadmin-v4wog88gw8k8goskgc00s0ck-053932419381
     depends_on:
       - db
     restart: always
-
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.406
+      - coolify.applicationId=1
+      - coolify.type=application
+      - coolify.name=phpmyadmin-v4wog88gw8k8goskgc00s0ck-053932419381
+      - coolify.resourceName=webmaster-openserverwpdemo01main-p4o0g8gossggcwcc0oosksgw
+      - coolify.projectName=wordpress-demo
+      - coolify.serviceName=webmaster-openserverwpdemo01main-p4o0g8gossggcwcc0oosksgw
+      - coolify.environmentName=development
+      - coolify.pullRequestId=0
+    networks:
+      v4wog88gw8k8goskgc00s0ck: null
 volumes:
-  db_data:
+  v4wog88gw8k8goskgc00s0ck_db-data:
+    name: v4wog88gw8k8goskgc00s0ck_db-data
+networks:
+  v4wog88gw8k8goskgc00s0ck:
+    name: v4wog88gw8k8goskgc00s0ck
+    external: true
+configs: {  }
+secrets: {  }
